@@ -1,6 +1,12 @@
 # mcp4office
 
+> 🇮🇹 **Italiano** | 🇬🇧 **[English](README.en.md)**
+
 Server **MCP (Model Context Protocol)** locale scritto in **C# (.NET Framework 4.8)** per pilotare **Microsoft Word, Excel, PowerPoint, Outlook classico** e leggere documenti **PDF / Acrobat** direttamente dal proprio client AI — senza Python, senza Node e senza chiavi API aggiuntive.
+
+- **Pagina download e guida (GitHub Pages):** https://pai-office-automation.github.io/mcp4office/
+- **Ultima release (`v0.5.7 beta`):** https://github.com/pai-office-automation/mcp4office/releases/tag/v0.5.7
+- **Privacy e sicurezza:** https://pai-office-automation.github.io/mcp4office/privacy.html
 
 ---
 
@@ -33,7 +39,7 @@ In sintesi: scegli **`mcp4office`** se usi già un client MCP (come Antigravity,
 
 ## Installazione automatica (1 clic, senza amministratore)
 
-Esegui `dist\mcp4office-Setup-0.5.7.exe` (generato da `build.ps1`):
+Scarica ed esegui [`mcp4office-Setup-0.5.7.exe`](https://github.com/pai-office-automation/mcp4office/releases/tag/v0.5.7) (oppure `dist\mcp4office-Setup-0.5.7.exe`, generato da `build.ps1`):
 - **Nota SmartScreen:** l'eseguibile locale non è firmato con certificato commerciale; Windows può mostrare l'avviso SmartScreen (*Ulteriori informazioni → Esegui comunque*).
 - Si installa nel profilo utente (`%LOCALAPPDATA%\Programs\mcp4office`), **senza UAC**.
 - Se `mcp4office.exe` è in esecuzione (aperto da un client AI), il Setup avvisa e chiede di chiudere i client prima di proseguire.
