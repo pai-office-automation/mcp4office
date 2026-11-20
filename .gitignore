@@ -1,0 +1,36 @@
+# Build e artefatti compilati
+bin/
+obj/
+dist/
+*.exe
+*.dll
+*.pdb
+
+# IDE e file utente
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.cache
+
+# File di servizio, log, backup e segreti locali
+*.log
+*.tmp
+*.bak
+*.mcp4office.bak
+.upgrading
+.env
+.env.*
+dati_locali/
+scratch/
+
+# Eventuali documenti di prova Office/PDF locali
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.pdf
+*.msg

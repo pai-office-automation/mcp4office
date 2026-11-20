@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mcp4office · Server MCP locale per Microsoft Office e PDF</title>
+  <meta name="description" content="Server MCP locale in C# (.NET 4.8) per pilotare Microsoft Word, Excel, PowerPoint, Outlook classico e PDF/Acrobat dalla tua chat AI con abbonamento flat. 32 strumenti, installatore 1 clic senza amministratore.">
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #111827;
+      --surface-2: #1e293b;
+      --border: rgba(148, 163, 184, 0.22);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #06b6d4;
+      --accent-2: #6366f1;
+      --warn-bg: rgba(245, 158, 11, 0.12);
+      --warn-border: rgba(245, 158, 11, 0.4);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top right, rgba(99,102,241,0.16), transparent 45%), var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    header {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
+    .badge {
+      display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 700;
+      background: rgba(6,182,212,0.18); color: #67e8f9; border: 1px solid rgba(6,182,212,0.4);
+    }
+    nav { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    nav a {
+      color: var(--muted); text-decoration: none; font-size: 0.92rem;
+      padding: 0.35rem 0.75rem; border-radius: 8px; border: 1px solid transparent;
+    }
+    nav a:hover, nav a.active { color: var(--text); border-color: var(--border); background: var(--surface); }
+    .hero {
+      margin-top: 2rem; padding: 2rem; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.10), rgba(99,102,241,0.10));
+      border: 1px solid rgba(6,182,212,0.35);
+    }
+    .hero h2 { margin: 0 0 0.75rem; font-size: 2rem; line-height: 1.2; }
+    .hero p { margin: 0 0 1.25rem; color: #cbd5e1; font-size: 1.05rem; max-width: 68ch; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.35rem; border-radius: 12px; font-weight: 700; text-decoration: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff;
+      box-shadow: 0 8px 24px rgba(6,182,212,0.22);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.2rem; border-radius: 12px; font-weight: 600; text-decoration: none;
+      background: var(--surface); color: var(--text); border: 1px solid var(--border);
+    }
+    .sha {
+      margin-top: 1rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.78rem; color: var(--muted); word-break: break-all;
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.25rem;
+    }
+    .card h3 { margin: 0 0 0.5rem; font-size: 1.08rem; }
+    .card ul { margin: 0; padding-left: 1.15rem; color: #cbd5e1; font-size: 0.94rem; }
+    .card li { margin-bottom: 0.35rem; }
+    h2.sec { margin: 2.5rem 0 0.75rem; font-size: 1.35rem; }
+    .note {
+      margin-top: 1.25rem; padding: 1rem 1.2rem; border-radius: 12px;
+      background: var(--warn-bg); border: 1px solid var(--warn-border);
+      font-size: 0.92rem; color: #fde68a;
+    }
+    .steps { counter-reset: st; list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+    .steps li {
+      counter-increment: st; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.9rem 1.1rem; display: flex; gap: 0.85rem; align-items: baseline;
+    }
+    .steps li::before {
+      content: counter(st); min-width: 1.7rem; height: 1.7rem; border-radius: 50%;
+      background: rgba(6,182,212,0.2); color: #67e8f9; font-weight: 800; font-size: 0.85rem;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    code {
+      background: var(--surface-2); padding: 0.12rem 0.38rem; border-radius: 5px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.88em;
+    }
+    footer {
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer a { color: #67e8f9; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>🔌 mcp4office</h1>
+        <span class="badge">v0.5.7</span>
+      </div>
+      <nav aria-label="Navigazione">
+        <a class="active" href="index.html">Download e guida</a>
+        <a href="privacy.html">Privacy e sicurezza</a>
+        <a href="https://github.com/pai-office-automation/mcp4office/releases" target="_blank" rel="noopener">Tutte le release ↗</a>
+        <a href="https://github.com/pai-office-automation/mcp4office" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h2>Pilota Microsoft Office e PDF dalla tua chat AI con abbonamento flat</h2>
+      <p>
+        Server <strong>MCP (Model Context Protocol)</strong> locale in C# (.NET Framework 4.8) per Windows.
+        Collega <strong>Word, Excel, PowerPoint, Outlook classico e PDF/Acrobat</strong> ai tuoi client MCP desktop
+        (Antigravity, Claude Desktop standard e Microsoft Store/MSIX, Claude Code, Codex) senza Python, senza Node e senza diritti di amministratore.
+      </p>
+      <div class="cta-row">
+        <a class="btn-primary" href="https://github.com/pai-office-automation/mcp4office/releases/download/v0.5.7/mcp4office-Setup-0.5.7.exe">
+          ⬇ Scarica mcp4office-Setup-0.5.7.exe
+        </a>
+        <a class="btn-secondary" href="https://github.com/pai-office-automation/mcp4office/releases/tag/v0.5.7" target="_blank" rel="noopener">
+          Note di rilascio v0.5.7 ↗
+        </a>
+      </div>
+      <div class="sha">
+        SHA-256: <code>03c7b8adc81c7fcf112bc7b3e69631b09ce3f118170dce99c20d2b9d5def2455</code> ·
+        <a href="https://github.com/pai-office-automation/mcp4office/releases/download/v0.5.7/SHA256SUMS.txt" style="color:#67e8f9;">SHA256SUMS.txt</a>
+      </div>
+      <div class="note">
+        <strong>Nota SmartScreen:</strong> l'installatore è un progetto open source non firmato con certificato commerciale.
+        Windows può mostrare l'avviso SmartScreen (<em>Ulteriori informazioni → Esegui comunque</em>).
+        In alternativa puoi compilare dai sorgenti con <code>.\build.ps1</code>.
+      </div>
+    </section>
+
+    <h2 class="sec">32 strumenti locali (16 di sola lettura)</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>📝 Word (11 tool)</h3>
+        <ul>
+          <li>Lettura selezione/documento, confronto tra documenti con diff a parole</li>
+          <li>Modifica singola o multipla fino a 200 celle tabella in un solo <code>Ctrl+Z</code></li>
+          <li>Preservazione di tabelle, paragrafi e grassetti/corsivi misti</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📊 Excel (6 tool)</h3>
+        <ul>
+          <li>Lettura/scrittura in blocco con date ISO, formule e protezione sovrascrittura</li>
+          <li>Confronto fogli per chiave (<code>key_column</code>) con rilevamento duplicati e righe senza ID</li>
+          <li>Creazione fogli e grafici nativi collegati all'intervallo</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📽️ PowerPoint (8 tool)</h3>
+        <ul>
+          <li>Lettura slide/note con <code>SlideID</code> stabile</li>
+          <li>Aggiunta slide, note, tabelle, grafici nativi, blocchi visivi a tema e immagini</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📧 Outlook &amp; 📄 PDF (7 tool)</h3>
+        <ul>
+          <li>Outlook classico: lettura selezionate/inbox e <strong>solo bozze</strong> aperte a schermo (mai invio automatico)</li>
+          <li>PDF locali sicuri (radici consentite, blocco symlink) e lettura da Adobe Acrobat aperto</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="sec">Installazione in 3 passi (senza UAC)</h2>
+    <ol class="steps">
+      <li>Chiudi eventuali client AI aperti (Antigravity, Claude Desktop, Codex) e avvia <code>mcp4office-Setup-0.5.7.exe</code>.</li>
+      <li>L'installatore copia i file nel profilo utente (<code>%LOCALAPPDATA%\Programs\mcp4office</code>) e configura automaticamente i client rilevati, salvando una copia di backup <code>.mcp4office.bak</code> dei file preesistenti.</li>
+      <li>Riapri il tuo client AI e apri un documento Word, Excel, PowerPoint o Outlook: i 32 strumenti sono subito pronti.</li>
+    </ol>
+
+    <h2 class="sec">Modalità sola lettura e sicurezza</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Flag <code>--sola-lettura</code></strong> (o <code>--read-only</code>): espone solo i 16 strumenti di lettura.</li>
+        <li><strong>Ancoraggio esplicito:</strong> ogni scrittura verifica documento/foglio/slide attesi e <code>state_token</code> SHA-256 prima di modificare qualsiasi dato.</li>
+        <li><strong>Excel <code>Ctrl+Z</code>:</strong> la scrittura via COM azzera la cronologia di annullamento di Excel; in caso di sovrascrittura è sempre richiesta conferma con token.</li>
+        <li><strong>Trasparenza:</strong> il server gira in locale su <code>stdio</code> (nessuna porta aperta), ma i testi letti dai documenti vengono inviati al modello AI del tuo client secondo le condizioni del tuo piano. Leggi l'<a href="privacy.html" style="color:#67e8f9;">informativa privacy</a>.</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>
+        Progetto open source (licenza MIT) di <strong>pai-office-automation</strong>, non affiliato a Microsoft, Google, OpenAI, Anthropic o Adobe.
+        Preferisci un pannello dentro Office con chiave API a consumo? Scopri <a href="https://pai-office-automation.github.io/personal-ai-assistant-office/installa.html" target="_blank" rel="noopener">Personal AI Assistant per Office ↗</a>.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
